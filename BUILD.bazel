@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_binary", "go_path")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["printdata.go"],
+    importpath = "yext/mockgen",
+    visibility = ["//visibility:public"],
+    data = glob(["foo-data/**", "bar-data/**"]),
+    deps = [],
+)
+
+go_path(
+    name = "printdata_gopath",
+    deps = [":go_default_library"],
+)
+
+go_binary(
+    name = "printdata",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
